@@ -10,12 +10,7 @@ const Navigation = () => {
   };
 
   return (
-    <div className='relative'>
-      {/* <Button
-        type='primary'
-        icon={<MenuOutlined />}
-        onClick={handleMenuClick}
-      /> */}
+    <div style={{ position: 'fixed', top: 0, width: '100%' }}>
       <Menu
         mode='horizontal'
         // visible={visible}
