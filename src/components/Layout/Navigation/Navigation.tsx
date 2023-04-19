@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { Menu } from 'antd';
 import Link from 'next/link';
-import { MenuOutlined } from '@ant-design/icons';
-import { Menu, Button } from 'antd';
+import { useState } from 'react';
 
 const Navigation = () => {
   const [visible, setVisible] = useState(false);
@@ -33,6 +32,9 @@ const Navigation = () => {
         </Menu.Item>
         <Menu.Item key='correction'>
           <Link href='/correction'>Correction</Link>
+        </Menu.Item>
+        <Menu.Item key='difference'>
+          <Link href='/difference'>Difference</Link>
         </Menu.Item>
         <Menu.Item key='translation'>
           <Link href='/translation'>Translation</Link>

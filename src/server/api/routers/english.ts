@@ -1,41 +1,41 @@
-import { Configuration, OpenAIApi } from "openai";
+import { z } from 'zod';
+import { Configuration, OpenAIApi } from 'openai';
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
-import { z } from "zod";
+import { createTRPCRouter, publicProcedure } from '../trpc';
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: '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',
   // apiKey: process.env.OPEN_AI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
 
 const mistakeOptions = [
-  "Spelling mistakes",
-  "Grammar mistakes",
-  "Usage mistakes",
-  "Capitalization and punctuation mistakes",
-  "Typos",
-  "Verb tense errors",
-  "Subject-verb agreement errors",
-  "Word choice errors",
-  "Sentence structure errors",
-  "Pronoun errors",
-  "Parallelism errors",
-  "Apostrophe errors",
-  "Agreement errors",
-  "Preposition errors",
-  "Article errors",
-  "Confusing homophones",
-  "Misuse of idioms or expressions",
-  "Overuse or misuse of passive voice",
-  "Lack of clarity or coherence in writing",
-  "Incorrect word order",
+  'Spelling mistakes',
+  'Grammar mistakes',
+  'Usage mistakes',
+  'Capitalization and punctuation mistakes',
+  'Typos',
+  'Verb tense errors',
+  'Subject-verb agreement errors',
+  'Word choice errors',
+  'Sentence structure errors',
+  'Pronoun errors',
+  'Parallelism errors',
+  'Apostrophe errors',
+  'Agreement errors',
+  'Preposition errors',
+  'Article errors',
+  'Confusing homophones',
+  'Misuse of idioms or expressions',
+  'Overuse or misuse of passive voice',
+  'Lack of clarity or coherence in writing',
+  'Incorrect word order',
 ];
 
 const chatGenerator = (prompt: string) => {
   return openai.createCompletion({
-    model: "text-davinci-003",
+    model: 'text-davinci-003',
     prompt,
     temperature: 0.3,
     max_tokens: 1000,
@@ -89,6 +89,21 @@ export const englishRouter = createTRPCRouter({
       2) Correct "${input.word}" and explain why your sentence correct but my sentence is wrong.
       3) Make some similar sentences from ${input.word}.
       4) Provide me more explanation about each sentences and when should I use which sentence? 
+      `;
+      const response = await chatGenerator(prompt);
+
+      return response.data.choices[0]?.text;
+    }),
+  difference: publicProcedure
+    .input(z.object({ wordsPhrasesOrSentences: z.string().array() }))
+    .mutation(async ({ input }) => {
+      const values = input.wordsPhrasesOrSentences.join(', ');
+      const prompt = `
+      I have "${values}". Now your task is to follow those instructions step by step.
+      1) I want to know what is the differences in ${values}.
+      2) Can I use them interchangeably ?
+      3) Which one is most suitable on which context ?
+      4) Provide me more explanation about ${values}.
       `;
       const response = await chatGenerator(prompt);
 
