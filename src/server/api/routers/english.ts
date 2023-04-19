@@ -99,11 +99,25 @@ export const englishRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const values = input.wordsPhrasesOrSentences.join(', ');
       const prompt = `
-      I have "${values}". Now your task is to follow those instructions step by step.
-      1) I want to know what is the differences in ${values}.
-      2) Can I use them interchangeably ?
-      3) Which one is most suitable on which context ?
-      4) Provide me more explanation about ${values}.
+      I am providing you "${values}". Now your task is to follow those instructions step by step.
+      1) I want to know what the differences are between ${values}.
+      2) If there are any interchangeable found, then make some sentences using them
+      3) Can you provide me with more explanation about ${values}.
+      4) Give some examples using them with explanations in dash list style.
+      `;
+      const response = await chatGenerator(prompt);
+
+      return response.data.choices[0]?.text;
+    }),
+  translation: publicProcedure
+    .input(z.object({ sentence: z.string() }))
+    .mutation(async ({ input }) => {
+      const prompt = `
+      I am providing you "${input.sentence}". Now your task is to follow those instructions step by step.
+      1) Translate this sentence into english.
+      2) Explained this sentence.
+      3) Make a list of some similar sentences.
+      4) Explain the grammar structure of this sentence.
       `;
       const response = await chatGenerator(prompt);
 
