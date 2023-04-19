@@ -1,0 +1,32 @@
+.markdown-preview pre {
+  white-space: pre-wrap;
+}
+
+.markdown-preview {
+  margin: 32px;
+  line-height: 2.5;
+  font-size: 14px;
+  color: #2c2a2acb;
+  padding-bottom: 48px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 15px auto;
+  padding: 15px;
+  min-height: 100vh;
+}
+
+.mistakes {
+  padding-bottom: 60px;
+  line-height: 2.5;
+  font-size: 14px;
+  color: #2c2a2acb;
+}
+
+.affix-wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

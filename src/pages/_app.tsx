@@ -5,8 +5,9 @@ import { SessionProvider } from 'next-auth/react';
 
 import { api } from '~/utils/api';
 
+import Navigation from '~/components/Layout/Navigation/Navigation';
 import 'antd/dist/reset.css';
-import '~/styles/globals.css';
+import '../styles/global.css';
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -14,7 +15,14 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <ConfigProvider>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#00b96b',
+          },
+        }}
+      >
+        <Navigation />
         <Component {...pageProps} />
       </ConfigProvider>
     </SessionProvider>
