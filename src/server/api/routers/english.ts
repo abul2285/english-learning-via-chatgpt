@@ -4,8 +4,7 @@ import { Configuration, OpenAIApi } from 'openai';
 import { createTRPCRouter, publicProcedure } from '../trpc';
 
 const configuration = new Configuration({
-  apiKey: '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',
-  // apiKey: process.env.OPEN_AI_API_KEY,
+  apiKey: process.env.OPEN_AI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
